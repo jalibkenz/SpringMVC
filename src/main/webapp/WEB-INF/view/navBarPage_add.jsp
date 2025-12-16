@@ -2,15 +2,15 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
 <form:form method="post"
-           action="${pageContext.request.contextPath}/student/formSave"
+           action="${pageContext.request.contextPath}/student/addSave"
            modelAttribute="studentFormDTO">
 
     <!-- ================= GLOBAL ERRORS ================= -->
     <form:errors cssClass="alert alert-danger" element="div"/>
 
     <!-- ================= STUDENT ================= -->
-    <h5>Student Details</h5>
 
+    <h5 class="mt-4">Student Contact Data</h5>
     <div class="mb-3">
         <label>Student Name</label>
         <form:input path="studentName" class="form-control"/>

@@ -96,7 +96,7 @@
         <h1>Digital Diary</h1>
 
         <a href="dashboard" class="btn-save">
-            Save Student Profile
+            ENTER
         </a>
     </div>
 </div>

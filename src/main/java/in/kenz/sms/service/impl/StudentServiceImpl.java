@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -28,6 +27,9 @@ public class StudentServiceImpl implements StudentService {
         this.skillCourseDao = skillCourseDao;
     }
 
+    // =========================================================
+    // SAVE STUDENT (WRITE TRANSACTION)
+    // =========================================================
     @Override
     @Transactional
     public void saveFromForm(StudentFormDTO studentFormDTO) {
@@ -61,13 +63,13 @@ public class StudentServiceImpl implements StudentService {
         // ===== ADDRESS =====
         Address address = new Address();
         address.setBuildingName(studentFormDTO.getBuildingName());
-        student.setAddresses(List.of(address));
+        student.getAddresses().add(address);
 
         // ===== CARE TAKER =====
         CareTaker careTaker = new CareTaker();
         careTaker.setCareTakerPersonName(studentFormDTO.getCareTakerPersonName());
         careTaker.setCareTakerOfTheStudent(student);
-        student.setCareTakers(List.of(careTaker));
+        student.getCareTakers().add(careTaker);
 
         // ===== COURSES (ManyToMany) =====
         Set<Course> courses =
@@ -84,8 +86,64 @@ public class StudentServiceImpl implements StudentService {
         studentDao.save(student);
     }
 
+
+    // =========================================================
+    // FIND STUDENT (READ-ONLY)
+    // =========================================================
     @Override
-    public void save(Student student) {
-        studentDao.save(student);
+    @Transactional(readOnly = true)
+    public Student findById(Integer id) {
+        return studentDao.findById(id);
+    }
+
+
+
+
+
+    // =========================================================
+    // UPDATE STUDENT
+    // =========================================================
+
+    @Override
+    @Transactional
+    public void updateFromForm(Integer id, StudentFormDTO dto) {
+
+        Student student = studentDao.findById(id);
+        if (student == null) {
+            throw new RuntimeException("Student not found");
+        }
+
+        student.setStudentName(dto.getStudentName());
+        student.setMobileNumber(dto.getMobileNumber());
+        student.getClub().setClubName(dto.getClubName());
+        student.getEnrolledSyllabusYear().setSyllabusYear(dto.getSyllabusYear());
+        student.getUniversityRegistrationNumber()
+                .setUniRegNumber(dto.getUniRegNumber());
+        student.getAadhaar().setAadhaarNumber(dto.getAadhaarNumber());
+
+        student.getAddresses().clear();
+        Address address = new Address();
+        address.setBuildingName(dto.getBuildingName());
+        student.getAddresses().add(address);
+
+        student.getCareTakers().clear();
+        CareTaker careTaker = new CareTaker();
+        careTaker.setCareTakerPersonName(dto.getCareTakerPersonName());
+        student.getCareTakers().add(careTaker);
+
+        student.setCourses(
+                new HashSet<>(courseDao.findByIds(dto.getCourseIds()))
+        );
+
+        student.setAppliedSkillDevelopmentCourses(
+                new HashSet<>(skillCourseDao.findByIds(
+                        dto.getSkillDevelopmentCourseIds()))
+        );
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Integer id) {
+        studentDao.deleteById(id);
     }
 }

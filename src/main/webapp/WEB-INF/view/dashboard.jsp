@@ -12,20 +12,38 @@
         body {
             background-color: #f4f6f9;
         }
+
         .dashboard-title {
             font-weight: 600;
         }
-        .card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        .dashboard-card {
+            height: 100%;
+            border-radius: 12px;
+            transition: all 0.25s ease-in-out;
             cursor: pointer;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+        .dashboard-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
         }
-        .card-icon {
-            font-size: 40px;
+
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            margin: 0 auto 15px;
         }
+
+        .icon-add { background: #e8f7ef; color: #198754; }
+        .icon-find { background: #e9f2ff; color: #0d6efd; }
+        .icon-edit { background: #fff4e5; color: #fd7e14; }
+        .icon-delete { background: #fdeaea; color: #dc3545; }
     </style>
 </head>
 
@@ -39,67 +57,53 @@
         <p class="text-muted">Manage student profiles from one place</p>
     </div>
 
-    <!-- Cards -->
+    <!-- Dashboard Cards -->
     <div class="row g-4">
 
         <!-- ADD STUDENT -->
-        <div class="col-md-4">
-            <a href="student/form"
+        <div class="col-lg-3 col-md-6">
+            <a href="${pageContext.request.contextPath}/student/add"
                class="text-decoration-none text-dark">
-                <div class="card text-center p-4">
-                    <div class="card-icon text-success mb-3">➕</div>
+                <div class="card dashboard-card text-center p-4">
+                    <div class="icon-circle icon-add">+</div>
                     <h5>Add Student</h5>
-                    <p class="text-muted">Create a new student profile</p>
+                    <p class="text-muted mb-0">Create a new student profile</p>
                 </div>
             </a>
         </div>
 
         <!-- FIND STUDENT -->
-        <div class="col-md-4">
-            <a href="student/find"
+        <div class="col-lg-3 col-md-6">
+            <a href="${pageContext.request.contextPath}/student/find"
                class="text-decoration-none text-dark">
-                <div class="card text-center p-4">
-                    <div class="card-icon text-primary mb-3">🔍</div>
+                <div class="card dashboard-card text-center p-4">
+                    <div class="icon-circle icon-find">🔍</div>
                     <h5>Find Student</h5>
-                    <p class="text-muted">Search student by ID or name</p>
+                    <p class="text-muted mb-0">Search student by ID</p>
                 </div>
             </a>
         </div>
 
         <!-- UPDATE STUDENT -->
-        <div class="col-md-4">
-            <a href="${pageContext.request.contextPath}/student/update"
+        <div class="col-lg-3 col-md-6">
+            <a href="${pageContext.request.contextPath}/student/edit"
                class="text-decoration-none text-dark">
-                <div class="card text-center p-4">
-                    <div class="card-icon text-warning mb-3">✏️</div>
+                <div class="card dashboard-card text-center p-4">
+                    <div class="icon-circle icon-edit">✏️</div>
                     <h5>Update Student</h5>
-                    <p class="text-muted">Edit existing student details</p>
+                    <p class="text-muted mb-0">Edit existing student details</p>
                 </div>
             </a>
         </div>
 
         <!-- DELETE STUDENT -->
-        <div class="col-md-4">
+        <div class="col-lg-3 col-md-6">
             <a href="${pageContext.request.contextPath}/student/delete"
                class="text-decoration-none text-dark">
-                <div class="card text-center p-4">
-                    <div class="card-icon text-danger mb-3">🗑️</div>
+                <div class="card dashboard-card text-center p-4">
+                    <div class="icon-circle icon-delete">🗑️</div>
                     <h5>Delete Student</h5>
-                    <p class="text-muted">Remove a student record</p>
-                </div>
-            </a>
-        </div>
-
-        <!-- MICROMANAGE STUDENT -->
-        <div class="col-md-4">
-            <a href="${pageContext.request.contextPath}/student/manage"
-               class="text-decoration-none text-dark">
-                <div class="card text-center p-4">
-                    <div class="card-icon text-info mb-3">⚙️</div>
-                    <h5>MicroManage Student</h5>
-                    <p class="text-muted">
-                        Addresses, Courses, Caretakers, IDs
-                    </p>
+                    <p class="text-muted mb-0">Remove a student record</p>
                 </div>
             </a>
         </div>

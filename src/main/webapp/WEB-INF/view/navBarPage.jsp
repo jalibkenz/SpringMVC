@@ -61,7 +61,7 @@
             </div>
 
             <div class="col-auto">
-                <a href="${pageContext.request.contextPath}/student/form" class="nav-tile">➕ Add</a>
+                <a href="${pageContext.request.contextPath}/student/add" class="nav-tile">➕ Add</a>
             </div>
 
             <div class="col-auto">
@@ -69,15 +69,11 @@
             </div>
 
             <div class="col-auto">
-                <a href="${pageContext.request.contextPath}/student/update" class="nav-tile">✏️ Update</a>
+                <a href="${pageContext.request.contextPath}/student/edit" class="nav-tile">✏️ Update</a>
             </div>
 
             <div class="col-auto">
                 <a href="${pageContext.request.contextPath}/student/delete" class="nav-tile">🗑️ Delete</a>
-            </div>
-
-            <div class="col-auto">
-                <a href="${pageContext.request.contextPath}/student/manage" class="nav-tile">⚙️ MicroManage</a>
             </div>
 
         </div>

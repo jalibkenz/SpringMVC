@@ -3,6 +3,7 @@ package in.kenz.sms.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,9 +16,9 @@ public class Student {
     private Long mobileNumber;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id")
-    private List<Address> addresses;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "student_id")   // FK stored in Address table
+    private Set<Address> addresses = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Club club;
@@ -38,7 +39,7 @@ public class Student {
     //Bidirectional
 
     @OneToMany(mappedBy = "careTakerOfTheStudent", cascade = CascadeType.ALL)
-    private List<CareTaker> careTakers;
+    private Set<CareTaker> careTakers = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "syllabusYear_id")
@@ -61,7 +62,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Integer id, String studentName, Long mobileNumber, List<Address> addresses, Club club, Set<Course> courses, UniversityRegistrationNumber universityRegistrationNumber, List<CareTaker> careTakers, SyllabusYear enrolledSyllabusYear, Set<SkillDevelopmentCourses> appliedSkillDevelopmentCourses, Aadhaar aadhaar) {
+    public Student(Integer id, String studentName, Long mobileNumber, Set<Address> addresses, Club club, Set<Course> courses, UniversityRegistrationNumber universityRegistrationNumber, Set<CareTaker> careTakers, SyllabusYear enrolledSyllabusYear, Set<SkillDevelopmentCourses> appliedSkillDevelopmentCourses, Aadhaar aadhaar){
         this.id = id;
         this.studentName = studentName;
         this.mobileNumber = mobileNumber;
@@ -116,11 +117,11 @@ public class Student {
         this.mobileNumber = mobileNumber;
     }
 
-    public List<Address> getAddresses() {
+    public Set<Address> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
 
@@ -148,11 +149,11 @@ public class Student {
         this.universityRegistrationNumber = universityRegistrationNumber;
     }
 
-    public List<CareTaker> getCareTakers() {
+    public Set<CareTaker> getCareTakers() {
         return careTakers;
     }
 
-    public void setCareTakers(List<CareTaker> careTakers) {
+    public void setCareTakers(Set<CareTaker> careTakers) {
         this.careTakers = careTakers;
     }
 
